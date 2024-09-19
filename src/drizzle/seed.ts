@@ -1,7 +1,12 @@
-import '#env';
-import { db } from '#src/drizzle/index';
+import { db } from '../drizzle';
+import { redirects } from './schema/redirects';
 
 async function seed() {
+  for (let i = 0; i < 50; i++) {
+    console.log("inserting", i)
+    await db.insert(redirects).values({ url: 'https://ss-tm.xyz' });
+  }
+
   console.log('Seeding...');
   console.time('DB has been seeded!');
 }

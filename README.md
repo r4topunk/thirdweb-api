@@ -48,7 +48,7 @@ Configure as variáveis de ambiente copiando o arquivo `.env.exemple` para `.env
 
 ```env
 DATABASE_DIRECT_URL=
-SESSION_SECRET=
+JWT_SECRET_KEY=
 ```
 
 Para iniciar o modo de desenvolvimento
