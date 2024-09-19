@@ -23,7 +23,7 @@ router.get('/routes', async (req, res) => {
       .from(redirects)
 
     const BASE_HOST = `${req.protocol}://${req.get('host')}`;
-    const buildLink = (jwt: Record<string, any>) => `${BASE_HOST}/redirect/jwt/${encodeJWT({ uuid: jwt.uuid })}`;
+    const buildLink = (jwt: Record<string, any>) => `${BASE_HOST}/jwt/${encodeJWT({ uuid: jwt.uuid })}`;
     const ans = result.map(row => ({
       ...row,
       link: buildLink(row)
@@ -59,7 +59,7 @@ router.get('/redirect/:uuid', async (req, res) => {
   }
 });
 
-router.get('/redirect/jwt/:jwt', async (req, res) => {
+router.get('/jwt/:jwt', async (req, res) => {
   try {
     const { uuid } = decodeJWT(req.params.jwt)
 
