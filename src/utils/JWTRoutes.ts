@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET_KEY } from './Const';
+import { JWT_SECRET_KEY } from './constants';
 
 interface JWTCustomToken {
     uuid: string
