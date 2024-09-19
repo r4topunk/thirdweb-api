@@ -1,7 +1,5 @@
 import jwt from 'jsonwebtoken';
-import 'dotenv/config';
-
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || '';
+import { JWT_SECRET_KEY } from './Const';
 
 interface JWTCustomToken {
     uuid: string
