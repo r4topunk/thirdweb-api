@@ -1,5 +1,5 @@
-import '#env.ts';
-import { db } from '#src/drizzle/index.ts';
+import '#env';
+import { db } from '#src/drizzle/index';
 
 async function seed() {
   console.log('Seeding...');

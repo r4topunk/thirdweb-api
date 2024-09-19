@@ -3,9 +3,9 @@ import express from 'express';
 import 'express-async-errors';
 import httpStatus from 'http-status';
 
-import { db } from '../drizzle/index.ts';
-import { redirects } from '../drizzle/schema/redirects.ts';
-import { decodeJWT, encodeJWT } from '../utils/JWTRoutes.ts';
+import { db } from '../drizzle/index';
+import { redirects } from '../drizzle/schema/redirects';
+import { decodeJWT, encodeJWT } from '../utils/JWTRoutes';
 import 'dotenv/config';
 
 const router = express.Router();
