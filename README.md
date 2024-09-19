@@ -14,6 +14,9 @@ Serviço para redirecionamento de URLs.
   - [x] JWT deve ser passado no lugar de UUID
     - [x] Validar JWT
     - [x] Se o JWT for válido, utilizar o UUID dele para buscar no DB
+- [ ] reconfigurar Drizzle para gerenciamento de schema
+- [ ] reconfigurar formatação automática do código
+- [ ] configurar testes automatizados
 
 ## Objetivo
 
