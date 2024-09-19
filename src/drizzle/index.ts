@@ -1,6 +1,7 @@
 import { drizzle, PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 // import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
+import { DATABASE_DIRECT_URL } from '../utils/Const';
 
 // const migrationClient = postgres(process.env.DATABASE_DIRECT_URL || '', {
 //   max: 1,
@@ -10,7 +11,7 @@ import postgres from 'postgres';
 //   migrationsFolder: 'src/drizzle/migrations',
 // });
 
-const queryClient = postgres(process.env.DATABASE_DIRECT_URL || '');
+const queryClient = postgres(DATABASE_DIRECT_URL);
 
 export const db: PostgresJsDatabase = drizzle(queryClient, {
   logger: true,
