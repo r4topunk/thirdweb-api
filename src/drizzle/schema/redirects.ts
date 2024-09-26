@@ -5,7 +5,7 @@ export const redirects = pgTable('redirects', {
   url: text('url').notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
-  description: text('text'),
+  description: text('description'),
   number: integer('number'),
   group: integer('group'),
   xLocation: integer('x_location'),
