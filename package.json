@@ -4,7 +4,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx ./api/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "drizzle:generate": "drizzle-kit generate:pg",
+    "drizzle:push": "drizzle-kit push",
+    "drizzle:seed": "tsx ./src/drizzle/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +16,7 @@
   "dependencies": {
     "compression": "^1.7.4",
     "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.24.2",
     "drizzle-orm": "^0.33.0",
     "express": "^4.21.0",
     "express-async-errors": "^3.1.1",
