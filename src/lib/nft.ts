@@ -4,6 +4,7 @@ import {
   claimTo,
   getActiveClaimCondition,
   getClaimConditions,
+  getNFT,
   getOwnedNFTs,
   getOwnedTokenIds,
   isBurnSupported,
@@ -16,6 +17,7 @@ import {
 } from "../utils/constants";
 import { getWalletBalance, privateKeyToAccount } from "thirdweb/wallets";
 import { client } from "../utils/thirdweb";
+import { NFTMetadata } from "thirdweb/utils";
 
 // 2. get the contract
 const contract = getContract({
@@ -89,21 +91,29 @@ async function burnNft() {
   // });
   // console.log(activeClaimCondition)
 
-  const transaction = claimTo({
-    contract,
-    to: R4TO_WALLET,
-    tokenId,
-    quantity: 1n,
-  });
+  // const transaction = claimTo({
+  //   contract,
+  //   to: R4TO_WALLET,
+  //   tokenId,
+  //   quantity: 1n,
+  // });
    
   // const tx = await sendTransaction({ transaction, account });
   // console.log(tx)
 
   // logOwnedNFTs();
 
-  const ownedTokenIds = await getOwnedTokenIds({
+  // const ownedTokenIds = await getOwnedTokenIds({
+  //   contract,
+  //   address: R4TO_WALLET,
+  // });
+  // console.log(ownedTokenIds)
+
+  const nft = await getNFT({
     contract,
-    address: R4TO_WALLET,
+    tokenId: 9n,
   });
-  console.log(ownedTokenIds)
-})();
+
+  console.dir(nft, { depth: null, colors: true })
+  
+})() ;
