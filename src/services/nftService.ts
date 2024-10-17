@@ -1,17 +1,18 @@
 import "dotenv/config";
 import "express-async-errors";
+import { ContractOptions, defineChain, getContract } from "thirdweb";
 import {
-  ContractOptions,
-  defineChain,
-  getContract,
-  sendTransaction,
-} from "thirdweb";
-import {
-  claimTo,
-  getClaimConditions,
-  getNFT,
-  getOwnedTokenIds,
+  isERC1155,
+  getClaimConditions as getClaimConditions1155,
+  getNFT as getNFT1155,
+  getOwnedTokenIds as getOwnedTokenIds1155,
 } from "thirdweb/extensions/erc1155";
+import {
+  isERC721,
+  getClaimConditions as getClaimConditions721,
+  getNFT as getNFT721,
+  getOwnedTokenIds as getOwnedTokenIds721,
+} from "thirdweb/extensions/erc721";
 import { client, account } from "../utils/thirdweb";
 
 /**
@@ -49,26 +50,59 @@ async function getNFTContractData(
     chain: defineChain(chainId),
   });
 
-  const [nftDetails, claimConditions, userOwnedTokenIds] = await Promise.all([
-    getNFT({
-      contract: nftContract,
-      tokenId,
-    }),
-    getClaimConditions({
-      contract: nftContract,
-      tokenId,
-    }),
-    getOwnedTokenIds({
-      contract: nftContract,
-      address: userAddress,
-    }),
-  ]);
+  // Determine the contract type (ERC721 or ERC1155)
+  const is1155 = await isERC1155({ contract: nftContract });
+  const is721 = await isERC721({ contract: nftContract });
+
+  if (!is1155 && !is721) {
+    throw new Error("Contract is neither ERC1155 nor ERC721");
+  }
+
+  let nftDetails, claimConditions, userOwnedTokenIds;
+
+  // Fetch data based on contract type
+  if (is1155) {
+    [nftDetails, claimConditions, userOwnedTokenIds] = await Promise.all([
+      getNFT1155({
+        contract: nftContract,
+        tokenId,
+      }),
+      getClaimConditions1155({
+        contract: nftContract,
+        tokenId,
+      }),
+      getOwnedTokenIds1155({
+        contract: nftContract,
+        address: userAddress,
+      }),
+    ]);
+  } else if (is721) {
+    [nftDetails, claimConditions, userOwnedTokenIds] = await Promise.all([
+      getNFT721({
+        contract: nftContract,
+        tokenId,
+      }),
+      getClaimConditions721({
+        contract: nftContract,
+      }),
+      getOwnedTokenIds721({
+        contract: nftContract,
+        owner: userAddress
+      }),
+    ]);
+  }
 
   const isUserOwner = userOwnedTokenIds.some(
     (token) => token.tokenId === tokenId
   );
 
-  return { nftContract, nftDetails, claimConditions, userOwnedTokenIds, isUserOwner };
+  return {
+    nftContract,
+    nftDetails,
+    claimConditions,
+    userOwnedTokenIds,
+    isUserOwner,
+  };
 }
 
 /**
